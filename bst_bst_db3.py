@@ -119,8 +119,27 @@ def searching(root,Oo,name):
             searching(root.c_right,Oo,name)
         elif currentValue > incomeValue:
             searching(root.c_left,Oo,name)
-        
 
+
+def searchingInDB(root, Oo, name):
+    if root is not None:
+        currentValue = ord(root.CharAlphbet)
+        incomeValue = ord(Oo)
+
+        print(currentValue, incomeValue)
+        if currentValue == incomeValue:
+            print("We Found Data",name,type(name))
+            return name
+            # work here
+
+            # insertToRootLengthTree(name)
+
+        elif currentValue < incomeValue:
+            name1 =searchingInDB(root.c_right, Oo, name)
+            return name1
+        elif currentValue > incomeValue:
+            name2 = searchingInDB(root.c_left, Oo, name)
+            return name2
 
 if __name__ == "__main__":
     root=dataInsertion()

@@ -1,5 +1,6 @@
 import socket
 import bst_bst_db3
+from bst_bst_db3 import searchingInDB
 
 class TCPserver():
     def __init__(self):
@@ -23,18 +24,24 @@ class TCPserver():
             print(type(clientInfo))
             c_username , c_password =clientInfo.split(" ")
             db_return =self.toDatabase(c_username)
-            
+            print(f'We Found !{db_return}')
 
-
+            if db_return:
+                db_return="We Found:"+db_return
+                db_return:bytes = bytes(db_return, 'utf-8')
             # sock.send(b'ACK')
-            toSend=bytes(request)
-            sock.send(toSend)
+
+                sock.send(db_return)
+            else:
+                sock.send(b'Not Found!')
     def toDatabase(self,db_data):
         root =bst_bst_db3.dataInsertion()
         db_data=db_data.lower()
         firstData = db_data[0]
-        db_return =bst_bst_db3.searching(root,firstData,db_data)
-        return  db_return
+        flag  = searchingInDB(root,firstData,db_data)
+        print("[*]We found",flag)
+        return flag
+
 
 
 if __name__ == '__main__':
