@@ -1,4 +1,4 @@
-from PythonCode.ProjectZero.bst_bst_dbII import root_length_tree
+from bst_bst_dbII import root_length_tree
 
 
 class DataTree:
@@ -38,9 +38,21 @@ def searchLenghtInRLT(data , dataLength,_RLT):
     if _RLT is not None:
         if _RLT.data==dataLength:
 
-            _RLT.info.append(data)
+            print("working here!",_RLT.info)
+            if len(_RLT.info) == 0:
+                _RLT.info.append(data)
+                print("Data Inserted :", data)
+            else:
+                for i in _RLT.info:
+                    if i == data:
+                        print("Already Exit!")
+                        return _RLT
 
-        #     data ထည့်ပြီးသွားလျင် ပြန်ပြီး root တစ်ခုလုံးကို update မလုပ်နိုင်သေး
+
+                _RLT.info.append(data)
+                print("Data Inserted :", data)
+
+
 
         if _RLT.data < dataLength :
             _RLT.right = searchLenghtInRLT(data , dataLength , _RLT.right)
@@ -56,6 +68,32 @@ def RLTchecking(RLT):
             print("data are:",RLT.info)
 
         RLTchecking(RLT.right)
+
+# def insertToRootLengthTree(data):
+#     dataLength = len(data)
+#     nodeObj=Node(data)
+#     try:
+#         RLT = searchLenghtInRLT(data,dataLength,nodeObj.RootLengthTree)
+#         print('Inserted at RootLenghtTree',RLT)
+#         RLTchecking(RLT)
+#
+#     except Exception as err:
+#         print(err)
+#
+# def searchLenghtInRLT(data , dataLength,_RLT):
+#
+#     if _RLT is not None:
+#         if _RLT.data==dataLength:
+#
+#             _RLT.info.append(data)
+#
+#         #     data ထည့်ပြီးသွားလျင် ပြန်ပြီး root တစ်ခုလုံးကို update မလုပ်နိုင်သေး
+#
+#         if _RLT.data < dataLength :
+#             _RLT.right = searchLenghtInRLT(data , dataLength , _RLT.right)
+#         else:
+#             _RLT.left = searchLenghtInRLT(data , dataLength , _RLT.left)
+#     return _RLT
 
 def dataInsertion():
     
