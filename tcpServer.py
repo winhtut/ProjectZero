@@ -1,6 +1,6 @@
 import socket
 import bst_bst_db3
-from bst_bst_db3 import searchingInDB , status , searchingInDBLogin,forLoginObj
+from bst_bst_db3 import searchingInDB , status , searchingInRLTTree,forLoginObj,RLTchecking
 
 class TCPserver():
     def __init__(self):
@@ -63,8 +63,11 @@ class TCPserver():
 
         db_data=db_data.lower()
         firstData = db_data[0]
-        searchingInDBLogin(forLoginObj.getTree(),firstData,db_data,db_pw)
-        if status.LoginStatus == True:
+
+        print("Lgoin Process")
+        RLTchecking(forLoginObj.getTree())
+        found_name =searchingInRLTTree(forLoginObj.getTree(),firstData,db_data,db_pw)
+        if found_name == db_data:
 
             print("[*]Login Success ",db_data)
             return db_data

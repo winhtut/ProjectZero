@@ -54,6 +54,7 @@ def insertToRootLengthTree(data,db_pw):
         print("message",status.status)
         RLTchecking(RLT)
 
+
     except Exception as err:
         print(err)
 #Login
@@ -65,6 +66,7 @@ def insertToRootLengthTreeLogin(data,db_pw):
 
         print("Message Login :",status.LoginStatus)
         RLTchecking(RLT)
+
 
     except Exception as err:
         print(err)
@@ -143,24 +145,48 @@ def searchLenghtInRLTLogin(data , dataLength,_RLT,db_pw): #for login
     return _RLT
 
 #SearchingInDB Lgoin
-def searchingInDBLogin(root, Oo, name,db_pw):
+# def searchingInDBLogin(root, Oo, name,db_pw):
+#     if root is not None:
+#         currentValue = ord(root.CharAlphbet)
+#         incomeValue = ord(Oo)
+#
+#         print(currentValue, incomeValue)
+#         if currentValue == incomeValue:
+#             print("We Found Data at searching in DB :",name,type(name))
+#             # return name
+#             # work here
+#
+#             insertToRootLengthTree(name,db_pw)
+#
+#         elif currentValue < incomeValue:
+#             name1 =searchingInDBLogin(root.c_right, Oo, name,db_pw)
+#             return name1
+#         elif currentValue > incomeValue:
+#             name2 = searchingInDBLogin(root.c_left, Oo, name,db_pw)
+#             return name2
+def searchingInRLTTree(root, firstdata, name,db_pw):
     if root is not None:
-        currentValue = ord(root.CharAlphbet)
-        incomeValue = ord(Oo)
+        currentValue = root.data
+        incomeValue = ord(firstdata)
 
-        print(currentValue, incomeValue)
+        # print(currentValue, incomeValue)
         if currentValue == incomeValue:
-            print("We Found Data at searching in DB :",name,type(name))
+            print("We Found Data at searching in Lenght :")
             # return name
             # work here
 
-            insertToRootLengthTree(name,db_pw)
+            length =len(root.info)
+            for i in length:
+                if root.info[i]==name and root.infoPw[i]==db_pw:
+                    return name
+
+
 
         elif currentValue < incomeValue:
-            name1 =searchingInDB(root.c_right, Oo, name,db_pw)
+            name1 =searchingInRLTTree(root.c_right,firstdata,name,db_pw)
             return name1
         elif currentValue > incomeValue:
-            name2 = searchingInDB(root.c_left, Oo, name,db_pw)
+            name2 = searchingInRLTTree(root.c_left, firstdata,name,db_pw)
             return name2
 
 def RLTchecking(RLT):
