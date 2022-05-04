@@ -1,5 +1,11 @@
 from bst_bst_dbII import root_length_tree
 
+class CheckingStatus:
+    def __init__(self):
+        self.status =None
+
+status =CheckingStatus()
+
 
 class DataTree:
     def __init__(self):
@@ -27,13 +33,16 @@ def insertToRootLengthTree(data):
     nodeObj=Node(data)
     try:
         RLT = searchLenghtInRLT(data,dataLength,nodeObj.RootLengthTree)
-        print('Inserted at RootLenghtTree',RLT)
+        print('Inserted at RootLenghtTree Just Showing Object Memory Address: ',RLT)
+
+        print("message",status.status)
         RLTchecking(RLT)
 
     except Exception as err:
         print(err)
 
 def searchLenghtInRLT(data , dataLength,_RLT):
+
 
     if _RLT is not None:
         if _RLT.data==dataLength:
@@ -42,23 +51,28 @@ def searchLenghtInRLT(data , dataLength,_RLT):
             if len(_RLT.info) == 0:
                 _RLT.info.append(data)
                 print("Data Inserted :", data)
+                status.status=True
+
+                return _RLT
             else:
                 for i in _RLT.info:
                     if i == data:
                         print("Already Exit!")
+                        status.status=False
+
                         return _RLT
-
-
                 _RLT.info.append(data)
                 print("Data Inserted :", data)
-
-
+                status.status=True
 
         if _RLT.data < dataLength :
             _RLT.right = searchLenghtInRLT(data , dataLength , _RLT.right)
         else:
             _RLT.left = searchLenghtInRLT(data , dataLength , _RLT.left)
     return _RLT
+
+
+
 
 def RLTchecking(RLT):
     if RLT is not None:
