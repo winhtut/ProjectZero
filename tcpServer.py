@@ -28,12 +28,14 @@ class TCPserver():
 
                 if db_return:
                     db_return="Registration Success Mr/Ms: "+db_return
+
                     db_return:bytes = bytes(db_return, 'utf-8')
             # sock.send(b'ACK')
 
                     sock.send(db_return)
             else:
                 db_return = self.toDatabaseLogin(c_username, c_password)
+                print("db return type",type(db_return))
                 if db_return:
                     db_return = "Login Success  Mr/Ms: " + db_return
                     db_return: bytes = bytes(db_return, 'utf-8')
@@ -67,10 +69,9 @@ class TCPserver():
         print("Lgoin Process")
         RLTchecking(forLoginObj.getTree())
         found_name =searchingInRLTTree(forLoginObj.getTree(),firstData,db_data,db_pw)
-        if found_name == db_data:
+        print('found name',found_name)
+        return found_name
 
-            print("[*]Login Success ",db_data)
-            return db_data
 
 
 

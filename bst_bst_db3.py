@@ -178,17 +178,18 @@ def searchingInRLTTree(root, firstdata, name,db_pw):
             length =len(root.info)
             for i in length:
                 if root.info[i]==name and root.infoPw[i]==db_pw:
+                    status.LoginStatus=True
                     return name
 
 
 
         elif currentValue < incomeValue:
-            name1 =searchingInRLTTree(root.c_right,firstdata,name,db_pw)
-            return name1
-        elif currentValue > incomeValue:
-            name2 = searchingInRLTTree(root.c_left, firstdata,name,db_pw)
-            return name2
+            searchingInRLTTree(root.right,firstdata,name,db_pw)
 
+        elif currentValue > incomeValue:
+            searchingInRLTTree(root.left, firstdata,name,db_pw)
+
+    return name
 def RLTchecking(RLT):
     if RLT is not None:
         RLTchecking(RLT.left)
