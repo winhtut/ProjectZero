@@ -29,11 +29,26 @@ class Node:
         
         self.RootLengthTree= root_length_tree.storeLengthTree()
 
+class forLogin:
+    def __init__(self,treeClone):
+        self.TreeClone = treeClone
+    def insert(self,rlt):
+
+        self.TreeClone = rlt
+
+    def getTree(self):
+        return self.TreeClone
+
+forLoginObj = forLogin('data')
 def insertToRootLengthTree(data,db_pw):
     dataLength = len(data)
-    nodeObj=Node(data)
+    nodeObj = Node(data)
+
     try:
         RLT = searchLenghtInRLT(data,dataLength,nodeObj.RootLengthTree,db_pw)
+        forLoginObj.insert(RLT)
+
+
         print('Inserted at RootLenghtTree Just Showing Object Memory Address: ',RLT)
 
         print("message",status.status)
