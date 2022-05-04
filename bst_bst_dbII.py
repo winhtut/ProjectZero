@@ -3,6 +3,7 @@ class LenghtBST:
     def __init__(self,data):
         self.data=data
         self.info=[]
+        self.infoPw=[]
         self.left=None
         self.right=None
 

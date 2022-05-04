@@ -20,15 +20,19 @@ class Client:
 
 def option():
     try:
-        option = int(input("1:For Login:\n2: For Register:"))
+        option = int(input("1:For Register:\n2: For Login"))
         if option==1:
-            c_username = input("Enter username:")
-            c_password = input("Enter password")
-            client_info= c_username+" "+c_password
+            c_username = input("Enter username for RG:")
+            c_password = input("Enter password For RG: ")
+            client_info= c_username+" "+c_password+" "+"register"
             clineObj=Client(client_info)
             clineObj.runClient()
         else:
-            pass
+            c_username = input("Login username:")
+            c_password = input("Login password :")
+            client_info = c_username + " " + c_password + " " + "login"
+            clineObj = Client(client_info)
+            clineObj.runClient()
                 # ယခု နေရာတွင် Registration ကို စစ်ဆေးရန် ရေးရမည်
     except Exception as err:
         print(err)

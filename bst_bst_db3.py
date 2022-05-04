@@ -3,6 +3,7 @@ from bst_bst_dbII import root_length_tree
 class CheckingStatus:
     def __init__(self):
         self.status =None
+        self.LoginStatus=None
 
 status =CheckingStatus()
 
@@ -28,11 +29,11 @@ class Node:
         
         self.RootLengthTree= root_length_tree.storeLengthTree()
 
-def insertToRootLengthTree(data):
+def insertToRootLengthTree(data,db_pw):
     dataLength = len(data)
     nodeObj=Node(data)
     try:
-        RLT = searchLenghtInRLT(data,dataLength,nodeObj.RootLengthTree)
+        RLT = searchLenghtInRLT(data,dataLength,nodeObj.RootLengthTree,db_pw)
         print('Inserted at RootLenghtTree Just Showing Object Memory Address: ',RLT)
 
         print("message",status.status)
@@ -40,17 +41,31 @@ def insertToRootLengthTree(data):
 
     except Exception as err:
         print(err)
+#Login
+def insertToRootLengthTreeLogin(data,db_pw):
+    dataLength = len(data)
+    nodeObj=Node(data)
+    try:
+        RLT = searchLenghtInRLTLogin(data,dataLength,nodeObj.RootLengthTree,db_pw)
 
-def searchLenghtInRLT(data , dataLength,_RLT):
+        print("Message Login :",status.LoginStatus)
+        RLTchecking(RLT)
+
+    except Exception as err:
+        print(err)
+
+def searchLenghtInRLT(data , dataLength,_RLT,db_pw):#for register
 
 
     if _RLT is not None:
         if _RLT.data==dataLength:
 
             print("working here!",_RLT.info)
-            if len(_RLT.info) == 0:
+            infoLength =len(_RLT.info)
+            if infoLength == 0:
                 _RLT.info.append(data)
-                print("Data Inserted :", data)
+                _RLT.infoPw.append(db_pw)
+                print("Registration Success :", data,db_pw)
                 status.status=True
 
                 return _RLT
@@ -61,18 +76,77 @@ def searchLenghtInRLT(data , dataLength,_RLT):
                         status.status=False
 
                         return _RLT
-                _RLT.info.append(data)
-                print("Data Inserted :", data)
+                _RLT.info[infoLength].append(data)
+                _RLT.infoPw[infoLength].append(db_pw)
+                print("Registration Success:", data , db_pw)
                 status.status=True
+                return _RLT
 
         if _RLT.data < dataLength :
-            _RLT.right = searchLenghtInRLT(data , dataLength , _RLT.right)
+            _RLT.right = searchLenghtInRLT(data , dataLength , _RLT.right,db_pw)
         else:
-            _RLT.left = searchLenghtInRLT(data , dataLength , _RLT.left)
+            _RLT.left = searchLenghtInRLT(data , dataLength , _RLT.left,db_pw)
     return _RLT
 
+def searchLenghtInRLTLogin(data , dataLength,_RLT,db_pw): #for login
 
 
+    if _RLT is not None:
+        if _RLT.data==dataLength:
+
+            print("working here! Checking For Login data: ",_RLT.info)
+            z=0
+            for i in _RLT.info:
+                if i == data and _RLT.infoPw[z]==db_pw:
+                    print("Login Success!")
+                    status.LoginStatus=True
+                    return _RLT
+                z=z+1
+            # if len(_RLT.info) == 0:
+            #     _RLT.info.append(data)
+            #     _RLT.infoPw.append(db_pw)
+            #     print("Data Inserted :", data)
+            #     status.status=True
+            #
+            #     return _RLT
+            # else:
+            #     for i in _RLT.info:
+            #         if i == data:
+            #             print("Already Exit!")
+            #             status.status=False
+            #
+            #
+            #             return _RLT
+            #     _RLT.info.append(data)
+            #     print("Data Inserted :", data)
+            #     status.status=True
+
+        if _RLT.data < dataLength :
+            _RLT.right = searchLenghtInRLT(data , dataLength , _RLT.right,db_pw)
+        else:
+            _RLT.left = searchLenghtInRLT(data , dataLength , _RLT.left,db_pw)
+    return _RLT
+
+#SearchingInDB Lgoin
+def searchingInDBLogin(root, Oo, name,db_pw):
+    if root is not None:
+        currentValue = ord(root.CharAlphbet)
+        incomeValue = ord(Oo)
+
+        print(currentValue, incomeValue)
+        if currentValue == incomeValue:
+            print("We Found Data at searching in DB :",name,type(name))
+            # return name
+            # work here
+
+            insertToRootLengthTree(name,db_pw)
+
+        elif currentValue < incomeValue:
+            name1 =searchingInDB(root.c_right, Oo, name,db_pw)
+            return name1
+        elif currentValue > incomeValue:
+            name2 = searchingInDB(root.c_left, Oo, name,db_pw)
+            return name2
 
 def RLTchecking(RLT):
     if RLT is not None:
@@ -173,25 +247,27 @@ def searching(root,Oo,name):
             searching(root.c_left,Oo,name)
 
 
-def searchingInDB(root, Oo, name):
+def searchingInDB(root, Oo, name,db_pw):
     if root is not None:
         currentValue = ord(root.CharAlphbet)
         incomeValue = ord(Oo)
 
         print(currentValue, incomeValue)
         if currentValue == incomeValue:
-            print("We Found Data",name,type(name))
-            return name
+            print("We Found Data at searching in DB :",name,type(name))
+            # return name
             # work here
 
-            # insertToRootLengthTree(name)
+            insertToRootLengthTree(name,db_pw)
 
         elif currentValue < incomeValue:
-            name1 =searchingInDB(root.c_right, Oo, name)
+            name1 =searchingInDB(root.c_right, Oo, name,db_pw)
             return name1
         elif currentValue > incomeValue:
-            name2 = searchingInDB(root.c_left, Oo, name)
+            name2 = searchingInDB(root.c_left, Oo, name,db_pw)
             return name2
+
+
 
 if __name__ == "__main__":
     root=dataInsertion()

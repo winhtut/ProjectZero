@@ -1,6 +1,6 @@
 import socket
 import bst_bst_db3
-from bst_bst_db3 import searchingInDB
+from bst_bst_db3 import searchingInDB , status , searchingInDBLogin
 
 class TCPserver():
     def __init__(self):
@@ -22,25 +22,46 @@ class TCPserver():
             print(f'[*] Received: {request.decode("utf-8")}')
             clientInfo =request.decode("utf-8")
             print(type(clientInfo))
-            c_username , c_password =clientInfo.split(" ")
-            db_return =self.toDatabase(c_username)
-            print(f'We Found !{db_return}')
+            c_username , c_password , option =clientInfo.split(" ")
+            if option == "register":
+                db_return =self.toDatabase(c_username,c_password)
 
-            if db_return:
-                db_return="We Found:"+db_return
-                db_return:bytes = bytes(db_return, 'utf-8')
+                if db_return:
+                    db_return="Registration Success Mr/Ms: "+db_return
+                    db_return:bytes = bytes(db_return, 'utf-8')
             # sock.send(b'ACK')
 
-                sock.send(db_return)
+                    sock.send(db_return)
             else:
-                sock.send(b'Not Found!')
-    def toDatabase(self,db_data):
+                db_return = self.toDatabaseLogin(c_username, c_password)
+                if db_return:
+                    db_return = "Login Success  Mr/Ms: " + db_return
+                    db_return: bytes = bytes(db_return, 'utf-8')
+                    # sock.send(b'ACK')
+
+                    sock.send(db_return)
+
+
+
+    def toDatabase(self,db_data,db_pw):
         root =bst_bst_db3.dataInsertion()
         db_data=db_data.lower()
         firstData = db_data[0]
-        flag  = searchingInDB(root,firstData,db_data)
-        print("[*]We found",flag)
-        return flag
+        searchingInDB(root,firstData,db_data,db_pw)
+        if status.status == True:
+
+            print("[*]Registration Success : ",db_data)
+            return db_data
+    def toDatabaseLogin(self,db_data,db_pw):
+        root =bst_bst_db3.dataInsertion()
+        db_data=db_data.lower()
+        firstData = db_data[0]
+        searchingInDBLogin(root,firstData,db_data,db_pw)
+        if status.LoginStatus == True:
+
+            print("[*]Login Success ",db_data)
+            return db_data
+
 
 
 
